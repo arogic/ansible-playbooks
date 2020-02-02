@@ -1,0 +1,12 @@
+---
+- name: "Get CPU Temperature"
+  hosts: all
+  user: ansible
+  become: yes
+  tasks:
+    - name: "Get CPU Temperature"
+      shell: vcgencmd measure_temp
+      register: output
+    - debug: msg="{{ output.stdout }}"
+...
+

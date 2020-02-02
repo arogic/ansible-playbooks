@@ -1,0 +1,14 @@
+---
+# See: https://github.com/kubernetes/kubernetes/issues/71305
+- name: "Switch to iptables-legacy"
+  hosts: all
+  user: ansible
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: Use iptables-legacy instead of nftables.
+      alternatives:
+        name: iptables
+        path: /usr/sbin/iptables-legacy
+...

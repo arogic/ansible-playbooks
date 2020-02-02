@@ -1,0 +1,34 @@
+---
+- name: "Generic Raspi Kubernetes setup"
+  hosts: all
+  user: ansible
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: "Get the apt-key for packages.cloud.google.com and add it"
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+    - name: "Add Kubernetes repository to Package sources"
+      shell: echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+      args:
+        executable: /bin/bash
+    - name: "Update the repository cache / Install useful network tools and kubeadm"
+      apt:
+        pkg:
+          - dnsutils
+          - kubeadm
+        update_cache: yes
+    - name: "Download the docker install script"
+      get_url:
+        url:  https://get.docker.com/
+        dest: /tmp/docker_install.sh
+        mode: '0744'
+    - name: "Install Docker"
+      shell: /tmp/docker_install.sh
+    - name: "Run usermod and newgrp command for docker"
+      shell: |
+        usermod ansible -aG docker
+        newgrp docker
+...

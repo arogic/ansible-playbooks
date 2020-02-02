@@ -1,0 +1,27 @@
+---
+- name: "Remove dphys-swapfile"
+  hosts: all
+  user: ansible
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: "Disable swap"
+      shell: |
+        dphys-swapfile swapoff
+        dphys-swapfile uninstall
+        update-rc.d -f dphys-swapfile remove
+      when:
+        - ansible_swaptotal_mb > 0
+    - name: "Remove dphys-swapfile package"
+      apt:
+        name: dphys-swapfile
+        state: absent
+      # args:
+      #   executable: /bin/bash
+      # stdout:
+      #   description: The command standard output
+      #   returned: always
+      #   type: string
+      #   sample: 'Test'
+...
