@@ -1,19 +1,20 @@
 ---
 - name: "ansible-vault test playbook example"
-  hosts: all
-  connection: local
+  hosts: "all"
+  connection: "local"
   vars:
     username: "tux"
   vars_files:
-    - password.yml
+    - "password.yml"
   tasks:
     - name: "Get the current date and time"
       command: "date"
-      register: "_date"
+      register: "todays_date"
+      check_mode: "no"
 
-    - name: "Print current date"
+    - name: "Print current Date"
       debug:
-        msg: "Date/Time: {{ _date.stdout }}"
+        msg: "Date/Time: {{ todays_date.stdout }}"
 
     - name: "Print Username and Password"
       debug:
