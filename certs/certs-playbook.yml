@@ -1,0 +1,27 @@
+---
+- name: "Create certs example"
+  hosts: all
+  tasks:
+    - name: Ensure directory exists for local self-signed TLS certs.
+      file:
+        path: /etc/ssl/certs/example
+        state: directory
+
+    - name: Generate an OpenSSL private key.
+      openssl_privatekey:
+        path: /etc/ssl/certs/example/privkey.pem
+
+    - name: Generate an OpenSSL CSR.
+      openssl_csr:
+        path: /etc/ssl/certs/example/example.csr
+        privatekey_path: /etc/ssl/certs/example/privkey.pem
+        common_name: "example.com"
+
+    - name: Generate a Self Signed OpenSSL certificate.
+      openssl_certificate:
+        path: /etc/ssl/certs/example/fullchain.pem
+        privatekey_path: /etc/ssl/certs/example/privkey.pem
+        csr_path: /etc/ssl/private/example/example.csr
+        provider: selfsigned
+...
+

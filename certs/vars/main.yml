@@ -1,0 +1,4 @@
+# Self-signed certificate settings.
+certificate_dir: /etc/ssl/private
+server_hostname: https.test”
+
