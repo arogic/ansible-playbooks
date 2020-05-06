@@ -7,5 +7,6 @@
   become_user: root
   tasks:
     - name: "Poweroff"
-      shell: shutdown -P
+      command: shutdown -P
+      # shell: shutdown -P
 ...
