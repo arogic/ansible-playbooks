@@ -5,7 +5,8 @@
   become: yes
   tasks:
     - name: "Get CPU Temperature"
-      shell: vcgencmd measure_temp
+      command: vcgencmd measure_temp
+      # shell: vcgencmd measure_temp
       register: output
     - debug: msg="{{ output.stdout }}"
 ...

@@ -22,5 +22,6 @@
       authorized_key:
         user: ansible
         state: present
-        key: "{{ lookup('file', '/home/tux/.ssh/id_rsa.pub') }}"
+        key: "{{ lookup('file', '$HOME/.ssh/id_rsa.pub') }}"
+        # key: "{{ lookup('file', '/home/tux/.ssh/id_rsa.pub') }}"
 ...
