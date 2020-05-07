@@ -2,3 +2,7 @@ inventory.yaml
 inventory
 ansible.cfg
 **/*.retry
+.ash_history
+.bash_history
+.cache/
+.python_history
