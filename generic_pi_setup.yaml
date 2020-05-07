@@ -11,7 +11,10 @@
         url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
         state: present
     - name: "Add Kubernetes repository to Package sources"
-      shell: echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+      shell: |
+        set -o pipefail
+        echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+      # shell: echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
       args:
         executable: /bin/bash
     - name: "Update the repository cache / Install useful network tools and kubeadm"
@@ -26,7 +29,8 @@
         dest: /tmp/docker_install.sh
         mode: '0744'
     - name: "Install Docker"
-      shell: /tmp/docker_install.sh
+      command: /tmp/docker_install.sh
+      # shell: /tmp/docker_install.sh
     - name: "Run usermod and newgrp command for docker"
       shell: |
         usermod ansible -aG docker
