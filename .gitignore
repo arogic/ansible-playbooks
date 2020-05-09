@@ -3,3 +3,7 @@ inventory
 ansible.cfg
 **/*.retry
 *.swp
+.ash_history
+.bash_history
+.cache
+.python_history
